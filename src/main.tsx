@@ -1,5 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { css } from '@emotion/react'
+import styled from '@emotion/styled';
+
+const Body = styled('body')`
+    background-color: green;
+`;
 
 export const App = () => {
     const [count, setCount] = React.useState(0);
@@ -10,13 +16,13 @@ export const App = () => {
                 <meta charSet="UTF-8" />
                 <title>title ... count = {count}</title>
             </head>
-            <body>
+            <Body>
                 <div className="card">
                     <button onClick={() => setCount((count) => count + 1)}>
                         count is {count}
                     </button>
                 </div>
-            </body>
+            </Body>
         </>
     );
 };
