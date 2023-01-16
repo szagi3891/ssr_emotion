@@ -15,6 +15,12 @@ const myCache = createCache({
     container: cssContainer
 });
 
+const setBody = (body: HTMLElement | null) => {
+    if (body !== null) {
+        body.appendChild(cssContainer);
+    }
+};
+
 export const App = () => {
     const [count, setCount] = React.useState(0);
 
@@ -24,7 +30,7 @@ export const App = () => {
                 <meta charSet="UTF-8" />
                 <title>title ... count = {count}</title>
             </head>
-            <Body>
+            <Body ref={setBody}>
                 <div className="card">
                     <button onClick={() => setCount((count) => count + 1)}>
                         count is {count}
@@ -40,16 +46,3 @@ ReactDOM.createRoot(document.documentElement).render(
         <App />
     </React.StrictMode>,
 );
-
-console.info('myCache.sheet', myCache.sheet);
-console.info('style', cssContainer);
-// myCache.registered
-
-setTimeout(() => {
-    document.body.appendChild(cssContainer);
-    console.info('Dodano');
-}, 0);
-
-// setInterval(() => {
-//     document.body.appendChild(cssContainer);
-// }, 1000);
