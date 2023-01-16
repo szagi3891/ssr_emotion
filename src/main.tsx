@@ -1,17 +1,25 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { css } from '@emotion/react'
 import styled from '@emotion/styled';
+import createCache from '@emotion/cache';
+import { CacheProvider } from '@emotion/react';
 
 const Body = styled('body')`
     background-color: green;
 `;
 
+const cssContainer = document.createElement('div');
+
+const myCache = createCache({
+    key: 'debug-panel',
+    container: cssContainer
+});
+
 export const App = () => {
     const [count, setCount] = React.useState(0);
 
     return (
-        <>
+        <CacheProvider value={myCache}>
             <head>
                 <meta charSet="UTF-8" />
                 <title>title ... count = {count}</title>
@@ -23,7 +31,7 @@ export const App = () => {
                     </button>
                 </div>
             </Body>
-        </>
+        </CacheProvider>
     );
 };
 
@@ -32,3 +40,16 @@ ReactDOM.createRoot(document.documentElement).render(
         <App />
     </React.StrictMode>,
 );
+
+console.info('myCache.sheet', myCache.sheet);
+console.info('style', cssContainer);
+// myCache.registered
+
+setTimeout(() => {
+    document.body.appendChild(cssContainer);
+    console.info('Dodano');
+}, 0);
+
+// setInterval(() => {
+//     document.body.appendChild(cssContainer);
+// }, 1000);
